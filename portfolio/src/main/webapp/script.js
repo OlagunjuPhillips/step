@@ -15,6 +15,9 @@
 /**
  * Adds a random greeting to the page.
  */
+
+
+
 function addFavoriteShows() {
   const shows =
       ['Chuck', 'Lucifer', 'The Good Doctor', 'Love Death + Robots'];
@@ -25,4 +28,33 @@ function addFavoriteShows() {
   // Add it to the page.
   const showContainer = document.getElementById('show-container');
   showContainer.innerText = show;
+}
+
+function makebig(image) {
+    image.style.height = "60px"
+    image.style.width = "60px"
+}
+
+function normal(image) {
+    image.style.height = "30px"
+    iamge.style.width = "30px"
+}
+
+
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
 }
