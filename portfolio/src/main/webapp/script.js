@@ -18,7 +18,7 @@
 
 
 
-function addFavoriteShows() {
+function favoriteShows() {
   const shows =
       ['Chuck', 'Lucifer', 'The Good Doctor', 'Love Death + Robots'];
 
