@@ -39,3 +39,24 @@ function normal(image) {
     image.style.height = "40px"
     iamge.style.width = "40px"
 }
+
+function getDataPage() {
+    const dataPromise = fetch("/data")
+
+    dataPromise.then(handleData);
+}
+
+function handleData(data) {
+  console.log('Handling the response.');
+
+  const dataPromise = data.text();
+
+
+  dataPromise.then(addDataToDom);
+}
+
+function addDataToDom(data) {
+  
+  const dataContainer = document.getElementById('data-container');
+  dataContainer.innerText = data;
+}
