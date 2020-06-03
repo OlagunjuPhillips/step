@@ -25,22 +25,36 @@ import com.google.gson.Gson;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    
+  static final ArrayList<String> comments = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    ArrayList<String> hardcode = new ArrayList<>();
-    hardcode.add("fire");
-    hardcode.add("water");
-    hardcode.add("earth");
-
     response.setContentType("text/html;");
-    response.getWriter().println(convertToJsonUsingGson(hardcode));
+    response.getWriter().println(convertToJsonUsingGson(comments));
   }
-  private String convertToJsonUsingGson(ArrayList<String> hardcode){
+  private String convertToJsonUsingGson(ArrayList<String> comments){
     Gson gson = new Gson();
-    String hardcodeJsonString = gson.toJson(hardcode);
-    return hardcodeJsonString;
+    String commentsJsonString = gson.toJson(comments);
+    return commentsJsonString;
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      String text = request.getParameter("comment");
+      System.out.println(text);
+      if(text.length() != 0){
+      comments.add(text);
+      }
+      response.sendRedirect("/gallery.html");
+    }
+    
+
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
