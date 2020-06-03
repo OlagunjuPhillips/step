@@ -2,8 +2,149 @@
   margin-left: auto;
   margin-right: auto;
   width: 650px;
+  text-align:justify;
+  font-size: 20px;
+  padding: 16px 16px 16px 16px;
+  background-color: white;
+  border-style: solid;
 }
 
-#greeting-container {
-  margin-top: 20px;
+body{
+    background-image: url("/images/Phillipsotherbackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+li {
+    float: left;
+    list-style-type:none;
+    white-space: nowrap;
+}
+li:hover {
+    background-color:grey;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+  list-style-type: none;
+  width: 40%;
+  position:relative;
+  left: 30%;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 12;
+  overflow: hidden;
+  background-color: black;
+  width: 40%;
+  position:relative;
+  left: 30%;
+  border-style: solid;
+}
+
+#heading {
+    font-size: 40px;
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 650px;
+    background-color:white;
+}
+
+#image-container {
+  margin-left: auto;
+  margin-right: auto;
+  width:100%;
+  text-align:justify;
+  padding: 16px 16px 16px 16px;
+  background-color: white;
+  border-style: solid;
+}
+
+.pink {
+    color: pink;
+}
+
+.purple {
+    color: purple; 
+}
+
+
+#profiles {
+margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  text-align:justify;
+  font-size: 20px;
+  padding: 16px 16px 16px 16px;
+}
+
+#image {
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  text-align:justify;
+  font-size: 20px;
+  padding: 16px 16px 16px 16px;
+  background-color: white;
+  border-style: solid;
+}
+
+.marquee {
+    height: 90px;
+    overflow: hidden;
+    background: #fefefe;
+    color: #333;
+    border: 1px solid #4a4a4a;
+    }
+        
+.marquee img {
+    position: relative;
+    width: 160px;
+    height: 100%;
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    -moz-animation: scroll-left 2s linear infinite;
+    -webkit-animation: scroll-left 2s linear infinite;
+    animation: scroll-left 20s linear infinite;
+    }
+        
+@-moz-keyframes scroll-left {
+    0% {
+        -moz-transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes scroll-left {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@keyframes scroll-left {
+    0% {
+        -moz-transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
 }
