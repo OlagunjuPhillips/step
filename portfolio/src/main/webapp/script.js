@@ -47,8 +47,6 @@ function getDataPage() {
 }
 
 function handleData(data) {
-  console.log('Handling the response.');
-
   const dataPromise = data.text();
 
 
@@ -56,7 +54,8 @@ function handleData(data) {
 }
 
 function addDataToDom(data) {
-  
   const dataContainer = document.getElementById('data-container');
+  
   dataContainer.innerText = data;
+  console.log(data);
 }
