@@ -40,36 +40,23 @@ function normal(image) {
     iamge.style.width = "40px"
 }
 
-function getDataPage() {
-    const dataPromise = fetch("/data")
-
-    dataPromise.then(handleData);
+function loadTasks() {
+  fetch('/data').then(response => response.json()).then((tasks) => {
+    const taskListElement = document.getElementById('task-list');
+    tasks.forEach((task) => {
+      taskListElement.appendChild(createTaskElement(task));
+    })
+  });
 }
 
-function handleData(data) {
-  const dataPromise = data.text();
+/** Creates an element that represents a task, including its delete button. */
+function createTaskElement(task) {
+  const taskElement = document.createElement('li');
+  taskElement.className = 'task';
 
+  const titleElement = document.createElement('span');
+  titleElement.innerText = task.title;
 
-  dataPromise.then(addDataToDom);
-}
-
-function addDataToDom(data) {
-  const dataContainer = document.getElementById('data-container');
-  
-  dataContainer.innerText = commentsList(data);
-}
-
-function loadComments() {
-    fetch("/data").then(response => response.json()).then()
-}
-
-function commentsList(data) {
-    var splitComments = data.split(",");
-    var comments = "";
-
-    for (i = 0; i < splitComments.length; i++) {
-        comments += splitComments[i] + "\n";
-    }
-    
-    return comments;
+  taskElement.appendChild(titleElement);
+  return taskElement;
 }
