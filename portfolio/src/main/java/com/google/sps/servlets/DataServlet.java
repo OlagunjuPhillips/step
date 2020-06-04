@@ -35,8 +35,8 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    response.setContentType("application/json;");
-    response.getWriter().println(gson.json(tasks);
+    response.setContentType("text/html;");
+    response.getWriter().println(convertToJsonUsingGson(comments));
   }
   private String convertToJsonUsingGson(ArrayList<String> comments){
     String commentsJsonString = gson.toJson(comments);
