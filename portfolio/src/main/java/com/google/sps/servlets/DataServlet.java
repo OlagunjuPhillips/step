@@ -14,6 +14,10 @@
 
 package com.google.sps.servlets;
 
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,8 +35,8 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    response.setContentType("text/html;");
-    response.getWriter().println(convertToJsonUsingGson(comments));
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.json(tasks);
   }
   private String convertToJsonUsingGson(ArrayList<String> comments){
     String commentsJsonString = gson.toJson(comments);
@@ -41,12 +45,22 @@ public class DataServlet extends HttpServlet {
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("comment");
+    long timeStamp = System.currentTimeMillis();
 
     if(text.length() != 0) {
         comments.add(text);
     }
+
+    Entity taskEntity = new Entity("Task");
+    taskEntity.setProperty("comment", text);
+    taskEntity.setProperty("timestamp", timeStamp);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
     
     response.sendRedirect("/gallery.html");
+
+    
   }
     
 

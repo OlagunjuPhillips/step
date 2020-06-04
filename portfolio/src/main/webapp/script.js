@@ -59,8 +59,8 @@ function addDataToDom(data) {
   dataContainer.innerText = commentsList(data);
 }
 
-function splitComments(data) {
-    
+function loadComments() {
+    fetch("/data").then(response => response.json()).then()
 }
 
 function commentsList(data) {
