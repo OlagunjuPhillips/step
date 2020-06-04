@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   static final ArrayList<String> comments = new ArrayList<>();
+  Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,19 +35,19 @@ public class DataServlet extends HttpServlet {
     response.getWriter().println(convertToJsonUsingGson(comments));
   }
   private String convertToJsonUsingGson(ArrayList<String> comments){
-    Gson gson = new Gson();
     String commentsJsonString = gson.toJson(comments);
     return commentsJsonString;
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String text = request.getParameter("comment");
-      System.out.println(text);
-      if(text.length() != 0){
-      comments.add(text);
-      }
-      response.sendRedirect("/gallery.html");
+    String text = request.getParameter("comment");
+
+    if(text.length() != 0) {
+        comments.add(text);
     }
+    
+    response.sendRedirect("/gallery.html");
+  }
     
 
 

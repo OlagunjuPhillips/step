@@ -56,20 +56,20 @@ function handleData(data) {
 function addDataToDom(data) {
   const dataContainer = document.getElementById('data-container');
   
-  dataContainer.innerText = commentsList(splitComments(data));
-  console.log();
+  dataContainer.innerText = commentsList(data);
 }
 
 function splitComments(data) {
-    var comments = data.split(",");
-    return comments;
+    
 }
 
 function commentsList(data) {
+    var splitComments = data.split(",");
     var comments = "";
-    for (i = 0; i < data.length; i++) {
-        comments += data[i] + "\n";
-        console.log(data[i]);
+
+    for (i = 0; i < splitComments.length; i++) {
+        comments += splitComments[i] + "\n";
     }
+    
     return comments;
 }
