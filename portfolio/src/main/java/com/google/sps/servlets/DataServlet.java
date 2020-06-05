@@ -47,11 +47,14 @@ public class DataServlet extends HttpServlet {
     List<Task> tasks = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
         long id = entity.getKey().getId();
+        String comment = "";
         if(entity.getProperty("comment") instanceof String){
-             String comment = (String) entity.getProperty("comment");
+            comment = (String) entity.getProperty("comment");
         }
-        if(entity.getProperty("timestamp") instanceof long){
-            long timestamp = (long) entity.getProperty("timestamp");
+
+        long timestamp = 0;
+        if(entity.getProperty("timestamp") instanceof Long){
+            timestamp = (long) entity.getProperty("timestamp");
         }
         
         Task task = new Task(id, comment, timestamp);
