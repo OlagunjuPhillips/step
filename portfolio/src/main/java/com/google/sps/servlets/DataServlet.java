@@ -35,21 +35,25 @@ import com.google.sps.data.Task;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   static final ArrayList<String> comments = new ArrayList<>();
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   Gson gson = new Gson();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<Task> tasks = new ArrayList<>();
     for (Entity entity : results.asIterable()) {
         long id = entity.getKey().getId();
-        String comment = (String) entity.getProperty("comment");
-        long timestamp = (long) entity.getProperty("timestamp");
-
+        if(entity.getProperty("comment") instanceof String){
+             String comment = (String) entity.getProperty("comment");
+        }
+        if(entity.getProperty("timestamp") instanceof long){
+            long timestamp = (long) entity.getProperty("timestamp");
+        }
+        
         Task task = new Task(id, comment, timestamp);
         tasks.add(task);
     }
@@ -74,7 +78,6 @@ public class DataServlet extends HttpServlet {
     taskEntity.setProperty("comment", text);
     taskEntity.setProperty("timestamp", timeStamp);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
     
     response.sendRedirect("/gallery.html");
