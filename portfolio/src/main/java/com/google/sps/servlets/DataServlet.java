@@ -30,11 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.google.sps.data.Task;
+import com.google.appengine.api.datastore.FetchOptions;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  static final ArrayList<String> comments = new ArrayList<>();
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
   Gson gson = new Gson();
 
@@ -43,18 +43,27 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
 
     PreparedQuery results = datastore.prepare(query);
+    int parameterValue = getNumberOfComments(request);
+
 
     List<Task> tasks = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
+
+    List<Entity> comments = results.asList(FetchOptions.Builder.withLimit(parameterValue));
+
+    for (Entity entity : comments) {
         long id = entity.getKey().getId();
         String comment = "";
         if(entity.getProperty("comment") instanceof String){
             comment = (String) entity.getProperty("comment");
+        } else {
+            System.err.println("Can't load comments");
         }
 
         long timestamp = 0;
         if(entity.getProperty("timestamp") instanceof Long){
             timestamp = (long) entity.getProperty("timestamp");
+        } else {
+            System.err.println("Can't load comments");
         }
         
         Task task = new Task(id, comment, timestamp);
@@ -72,22 +81,33 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("comment");
     long timeStamp = System.currentTimeMillis();
-
-    if(text.length() != 0) {
-        comments.add(text);
-    }
+    
 
     Entity taskEntity = new Entity("Task");
     taskEntity.setProperty("comment", text);
     taskEntity.setProperty("timestamp", timeStamp);
+    
 
     datastore.put(taskEntity);
     
-    response.sendRedirect("/gallery.html");
+    response.sendRedirect("/index.html");
 
     
   }
-    
+
+  private int getNumberOfComments(HttpServletRequest request){
+    String parameterValue = request.getParameter("parameterValue");
+    System.out.println(parameterValue);
+
+    int parameter = 0;
+      
+    try {
+        parameter = Integer.parseInt(parameterValue);
+    } catch (NumberFormatException e){
+        System.err.println("Can't convert to number");
+    }
+    return parameter;
+  }
 
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {

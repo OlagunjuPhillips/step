@@ -25,7 +25,6 @@
     </ul>
 </div>
 
-
 <p> 
 <div id="content">
     <p>I'm Phillips. I am a rising sophomore at Xavier University of Louisiana. 
@@ -35,3 +34,20 @@
     <button onclick="favoriteShows()">TV show</button>  <div id="show-container"></div>
     
 </div>
+<br></br>
+<body onload="loadTasks()">
+    <div id="comment">
+        <div id="task-list"></div>
+        <form action="/data" method="POST">
+            <label for="comment">Type a comment:</label>
+            <input type="text" name="comment">
+            <input type="submit"/>
+        </form>
+
+        <form action="/data" method="POST">
+            <input type="number" name="parameter" min="1" id="parameter" onchange="loadTasks()">
+            <br></br>
+            <input type="submit"/>
+        </form>
+    </div>
+</body>

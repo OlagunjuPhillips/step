@@ -41,20 +41,24 @@ function normal(image) {
 }
 
 function loadTasks() {
-  fetch('/data').then(response => response.json()).then((tasks) => {
-    const taskListElement = document.getElementById('task-list');
+  const parameter = document.getElementById("parameter").value;
+  console.log(document.getElementById("parameter").value);
+  fetch("/data?parameterValue=" + parameter).then(response => response.json()).then((tasks) => {
+    const taskListElement = document.getElementById("task-list");
     tasks.forEach((task) => {
+      const linebreak = document.createElement("br");
       taskListElement.appendChild(createTaskElement(task));
+      taskListElement.appendChild(linebreak);
     })
   });
 }
 
 /** Creates an element that represents a task, including its delete button. */
 function createTaskElement(task) {
-  const taskElement = document.createElement('li');
-  taskElement.className = 'task';
+  const taskElement = document.createElement("li");
+  taskElement.className = "task";
 
-  const titleElement = document.createElement('span');
+  const titleElement = document.createElement("span");
   titleElement.innerText = task.title;
 
   taskElement.appendChild(titleElement);
