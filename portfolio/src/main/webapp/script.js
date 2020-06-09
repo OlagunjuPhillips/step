@@ -40,27 +40,34 @@ function normal(image) {
     iamge.style.width = "40px"
 }
 
-function loadTasks() {
+function loadComment() {
   const parameter = document.getElementById("parameter").value;
-  console.log(document.getElementById("parameter").value);
-  fetch("/data?parameterValue=" + parameter).then(response => response.json()).then((tasks) => {
-    const taskListElement = document.getElementById("task-list");
-    tasks.forEach((task) => {
-      const linebreak = document.createElement("br");
-      taskListElement.appendChild(createTaskElement(task));
-      taskListElement.appendChild(linebreak);
+  
+
+  fetch("/data?parameterValue="+ parameter).then(response => response.json()).then((comments) => {
+
+    const commentListElement = document.getElementById("comment-list");
+    commentListElement.innerHTML = "";
+    const linebreak = document.createElement("br");
+    comments.forEach((comment) => {
+      commentListElement.appendChild(createCommentElement(comment));
+      commentListElement.appendChild(linebreak);
     })
   });
 }
 
-/** Creates an element that represents a task, including its delete button. */
-function createTaskElement(task) {
-  const taskElement = document.createElement("li");
-  taskElement.className = "task";
+
+function createCommentElement(comment) {
+  const commentElement = document.createElement("li");
+  commentElement.className = "comment";
 
   const titleElement = document.createElement("span");
-  titleElement.innerText = task.title;
+  titleElement.innerText = comment.title;
 
-  taskElement.appendChild(titleElement);
-  return taskElement;
+  commentElement.appendChild(titleElement);
+  return commentElement;
+}
+
+function deleteComments(){
+    fetch("/delete-data", {method:"POST"}).then(() => loadComment());
 }

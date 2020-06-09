@@ -22,15 +22,16 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import com.google.sps.data.Task;
+import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.FetchOptions;
+
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -40,17 +41,17 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
 
     PreparedQuery results = datastore.prepare(query);
     int parameterValue = getNumberOfComments(request);
 
 
-    List<Task> tasks = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
 
-    List<Entity> comments = results.asList(FetchOptions.Builder.withLimit(parameterValue));
+    List<Entity> commentsList = results.asList(FetchOptions.Builder.withLimit(parameterValue));
 
-    for (Entity entity : comments) {
+    for (Entity entity : commentsList) {
         long id = entity.getKey().getId();
         String comment = "";
         if(entity.getProperty("comment") instanceof String){
@@ -61,54 +62,46 @@ public class DataServlet extends HttpServlet {
 
         long timestamp = 0;
         if(entity.getProperty("timestamp") instanceof Long){
-            timestamp = (long) entity.getProperty("timestamp");
+            timestamp = (Long) entity.getProperty("timestamp");
         } else {
             System.err.println("Can't load comments");
         }
         
-        Task task = new Task(id, comment, timestamp);
-        tasks.add(task);
+        Comment commentTask = new Comment(id, comment, timestamp);
+        comments.add(commentTask);
     }
 
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(tasks));
-  }
-  private String convertToJsonUsingGson(ArrayList<String> comments){
-    String commentsJsonString = gson.toJson(comments);
-    return commentsJsonString;
+    response.getWriter().println(gson.toJson(comments));
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("comment");
     long timeStamp = System.currentTimeMillis();
     
+    Entity commentEntity = new Entity("Comment");
 
-    Entity taskEntity = new Entity("Task");
-    taskEntity.setProperty("comment", text);
-    taskEntity.setProperty("timestamp", timeStamp);
+    commentEntity.setProperty("comment", text);
+    commentEntity.setProperty("timestamp", timeStamp);
     
+    datastore.put(commentEntity);
 
-    datastore.put(taskEntity);
-    
-    response.sendRedirect("/index.html");
-
-    
+    response.sendRedirect("/index.html"); 
   }
 
   private int getNumberOfComments(HttpServletRequest request){
     String parameterValue = request.getParameter("parameterValue");
-    System.out.println(parameterValue);
-
     int parameter = 0;
       
     try {
         parameter = Integer.parseInt(parameterValue);
     } catch (NumberFormatException e){
         System.err.println("Can't convert to number");
+        System.out.println(parameterValue);
     }
+
     return parameter;
   }
-
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
@@ -117,4 +110,11 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }
+
+  private String convertToJsonUsingGson(ArrayList<String> comments){
+    String commentsJsonString = gson.toJson(comments);
+    return commentsJsonString;
+  }
 }
+
+  

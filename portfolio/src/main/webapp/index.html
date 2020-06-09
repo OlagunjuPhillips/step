@@ -26,28 +26,33 @@
 </div>
 
 <p> 
+
 <div id="content">
     <p>I'm Phillips. I am a rising sophomore at Xavier University of Louisiana. 
         This is my first time attempting to build a web application, so I am very excited about it
     <p>Click <a href="aboutme.html">here</a> to learn more about me.
     <p>Hold on! You might want to see one of my favorite TV shows, we may have that in commmon
     <button onclick="favoriteShows()">TV show</button>  <div id="show-container"></div>
-    
+
 </div>
 <br></br>
-<body onload="loadTasks()">
-    <div id="comment">
-        <div id="task-list"></div>
-        <form action="/data" method="POST">
-            <label for="comment">Type a comment:</label>
-            <input type="text" name="comment">
-            <input type="submit"/>
-        </form>
 
-        <form action="/data" method="POST">
-            <input type="number" name="parameter" min="1" id="parameter" onchange="loadTasks()">
-            <br></br>
-            <input type="submit"/>
-        </form>
-    </div>
+<body onload="loadComment()">
+    <div id="comment">
+
+    <div id="comment-list"></div>
+
+    <form action="/data" method="POST">
+        <label for="comment">Type a comment:</label>
+        <input type="text" name="comment" id="comment-box">
+        <br></br>
+        <input type="submit" name="submit-comment"/>
+    </form>
+
+        <label for="parameter">How many comments do you want to see:</label> 
+        <input type="number" name="parameter" min="1" id="parameter" onchange="loadComment()" value="10">
+        <button onclick="loadComment()">submit</button>
+        <button onclick="deleteComments()">delete all</button>
+
+</div>
 </body>

@@ -27,6 +27,11 @@ body{
   border-style: solid;
 }
 
+#task-list {
+    font-size:20px;
+    list-style-type:square;
+}
+
 li {
     list-style-type: none;
     float: left;
@@ -155,3 +160,7 @@ margin-left: auto;
     }
 }
 
+input[type=text]{
+    height: 100px;
+    width: 300px;
+}
