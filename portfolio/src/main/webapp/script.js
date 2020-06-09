@@ -50,8 +50,9 @@ function loadComment() {
     commentListElement.innerHTML = "";
     const linebreak = document.createElement("br");
     comments.forEach((comment) => {
-      commentListElement.appendChild(createCommentElement(comment));
       commentListElement.appendChild(linebreak);
+      commentListElement.appendChild(createCommentElement(comment));
+      
     })
   });
 }
