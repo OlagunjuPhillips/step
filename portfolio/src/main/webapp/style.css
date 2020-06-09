@@ -16,6 +16,22 @@ body{
     
 }
 
+#comment {
+  margin-left: auto;
+  margin-right: auto;
+  width: 650px;
+  text-align:justify;
+  font-size: 12px;
+  padding: 16px 16px 16px 16px;
+  background-color: white;
+  border-style: solid;
+}
+
+#task-list {
+    font-size:20px;
+    list-style-type:square;
+}
+
 li {
     list-style-type: none;
     float: left;
@@ -142,4 +158,9 @@ margin-left: auto;
         -webkit-transform: translateX(-100%);
         transform: translateX(-100%);
     }
+}
+
+input[type=text]{
+    height: 100px;
+    width: 300px;
 }

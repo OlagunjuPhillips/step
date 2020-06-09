@@ -40,36 +40,35 @@ function normal(image) {
     iamge.style.width = "40px"
 }
 
-function getDataPage() {
-    const dataPromise = fetch("/data")
-
-    dataPromise.then(handleData);
-}
-
-function handleData(data) {
-  const dataPromise = data.text();
-
-
-  dataPromise.then(addDataToDom);
-}
-
-function addDataToDom(data) {
-  const dataContainer = document.getElementById('data-container');
+function loadComment() {
+  const parameter = document.getElementById("parameter").value;
   
-  dataContainer.innerText = commentsList(data);
+
+  fetch("/data?parameterValue="+ parameter).then(response => response.json()).then((comments) => {
+
+    const commentListElement = document.getElementById("comment-list");
+    commentListElement.innerHTML = "";
+    const linebreak = document.createElement("br");
+    comments.forEach((comment) => {
+      commentListElement.appendChild(linebreak);
+      commentListElement.appendChild(createCommentElement(comment));
+      
+    })
+  });
 }
 
-function loadComments() {
-    fetch("/data").then(response => response.json()).then()
+
+function createCommentElement(comment) {
+  const commentElement = document.createElement("li");
+  commentElement.className = "comment";
+
+  const titleElement = document.createElement("span");
+  titleElement.innerText = comment.title;
+
+  commentElement.appendChild(titleElement);
+  return commentElement;
 }
 
-function commentsList(data) {
-    var splitComments = data.split(",");
-    var comments = "";
-
-    for (i = 0; i < splitComments.length; i++) {
-        comments += splitComments[i] + "\n";
-    }
-    
-    return comments;
+function deleteComments(){
+    fetch("/delete-data", {method:"POST"}).then(() => loadComment());
 }
