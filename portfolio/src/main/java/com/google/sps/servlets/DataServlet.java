@@ -110,11 +110,6 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }
-
-  private String convertToJsonUsingGson(ArrayList<String> comments){
-    String commentsJsonString = gson.toJson(comments);
-    return commentsJsonString;
-  }
 }
 
   
