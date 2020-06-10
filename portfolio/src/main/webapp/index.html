@@ -21,7 +21,11 @@
         
         <li>
             <a href="aboutme.html">About me</a>
-        </li>         
+        </li>  
+
+        <li>
+            <a href="/login">login/logout</a>
+        </li>       
     </ul>
 </div>
 
@@ -41,13 +45,17 @@
     <div id="comment">
 
     <div id="comment-list"></div>
+    </br>
 
-    <form action="/data" method="POST">
-        <label for="comment">Type a comment:</label>
-        <input type="text" name="comment" id="comment-box">
-        <br></br>
+    <form action="/data" method="POST" class="hidden" id="commentForm">
+        <textarea name="comment" id="comment-box">Enter your comment here</textarea>
+        </br>
         <input type="submit" name="submit-comment"/>
     </form>
+        </br>
+        <button onclick="addComments()">Add Comments</button>
+        </br>
+        <a href="/login" class="hidden" id="login-link">login</a>
 
         <label for="parameter">How many comments do you want to see:</label> 
         <input type="number" name="parameter" min="1" id="parameter" onchange="loadComment()" value="10">

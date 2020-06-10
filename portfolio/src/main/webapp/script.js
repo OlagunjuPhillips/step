@@ -48,8 +48,9 @@ function loadComment() {
 
     const commentListElement = document.getElementById("comment-list");
     commentListElement.innerHTML = "";
-    const linebreak = document.createElement("br");
+    
     comments.forEach((comment) => {
+      const linebreak = document.createElement("br");
       commentListElement.appendChild(linebreak);
       commentListElement.appendChild(createCommentElement(comment));
       
@@ -63,7 +64,7 @@ function createCommentElement(comment) {
   commentElement.className = "comment";
 
   const titleElement = document.createElement("span");
-  titleElement.innerText = comment.title;
+  titleElement.innerText = comment.email+": "+comment.title;
 
   commentElement.appendChild(titleElement);
   return commentElement;
@@ -71,4 +72,19 @@ function createCommentElement(comment) {
 
 function deleteComments(){
     fetch("/delete-data", {method:"POST"}).then(() => loadComment());
+}
+
+function addComments(){
+    fetch("/user-login").then(response => response.text()).then((response) => {
+
+        const commentBox = document.getElementById("commentForm");
+        const loginLink = document.getElementById("login-link");
+        
+        if(response[0] == "1"){
+            commentBox.style.display = "block";
+        }
+        else{
+            loginLink.style.display = "block";
+        }
+    })
 }
