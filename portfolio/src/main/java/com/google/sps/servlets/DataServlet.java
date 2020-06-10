@@ -31,12 +31,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  UserService userService = UserServiceFactory.getUserService();
   Gson gson = new Gson();
 
   @Override
@@ -46,7 +49,6 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     int parameterValue = getNumberOfComments(request);
 
-
     List<Comment> comments = new ArrayList<>();
 
     List<Entity> commentsList = results.asList(FetchOptions.Builder.withLimit(parameterValue));
@@ -54,6 +56,7 @@ public class DataServlet extends HttpServlet {
     for (Entity entity : commentsList) {
         long id = entity.getKey().getId();
         String comment = "";
+        String email = "";
         if(entity.getProperty("comment") instanceof String){
             comment = (String) entity.getProperty("comment");
         } else {
@@ -66,8 +69,15 @@ public class DataServlet extends HttpServlet {
         } else {
             System.err.println("Can't load comments");
         }
+
+        if(entity.getProperty("email") instanceof String){
+            email = (String) entity.getProperty("email");
+        } else {
+            System.err.println("Can't load comments");
+        }
+
         
-        Comment commentTask = new Comment(id, comment, timestamp);
+        Comment commentTask = new Comment(id, comment, timestamp, email);
         comments.add(commentTask);
     }
 
@@ -78,11 +88,13 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("comment");
     long timeStamp = System.currentTimeMillis();
-    
+    String userEmail = userService.getCurrentUser().getEmail();
+
     Entity commentEntity = new Entity("Comment");
 
     commentEntity.setProperty("comment", text);
     commentEntity.setProperty("timestamp", timeStamp);
+    commentEntity.setProperty("email", userEmail);
     
     datastore.put(commentEntity);
 
