@@ -79,7 +79,8 @@ function addComments(){
 
         const commentBox = document.getElementById("commentForm");
         const loginLink = document.getElementById("login-link");
-        
+
+
         if(response[0] == "1"){
             commentBox.style.display = "block";
         }

@@ -28,4 +28,5 @@ public class Comment {
     this.timestamp = timestamp;
     this.email = email;
   }
+
 }
