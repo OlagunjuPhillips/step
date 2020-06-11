@@ -14,7 +14,8 @@
 
 package com.google.sps.servlets;
 
-
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -80,6 +81,9 @@ public class DataServlet extends HttpServlet {
         Comment commentTask = new Comment(id, comment, timestamp, email);
         comments.add(commentTask);
     }
+
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    String uploadUrl = blobstoreService.createUploadUrl("/form-handler");
 
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
