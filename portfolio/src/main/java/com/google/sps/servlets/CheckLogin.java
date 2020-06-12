@@ -19,9 +19,11 @@ public class CheckLogin extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      response.getWriter().println("1");
+      response.getWriter().println("1"); // "1" shows that a user is logged into the website.
     } else {
-      response.getWriter().println("0");
+      response.getWriter().println("0"); // "0" shows that a user is logged out of the website.
     }
+    
   }
+  
 }
