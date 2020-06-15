@@ -41,31 +41,44 @@
 </div>
 <br></br>
 
-<body onload="loadComment()">
+<body onload="loadAllFunctions()">
     <div id="comment">
 
-    <div id="comment-list"></div>
-    </br>
+        <div id="comment-list"></div>
 
-    <form action="/data" method="POST" class="hidden" id="commentForm">
-        <textarea name="comment" id="comment-box">Enter your comment here</textarea>
-        </br>
-        <input type="submit" name="submit-comment"/>
-        </br>
-        </br>
-        <input type="file" name="image-upload">
-        </br>
-        <button>submit</button>
-    </form>
-        </br>
-        <button onclick="addComments()">Add Comments</button>
-        </br>
-        <a href="/login" class="hidden" id="login-link">login</a>
+        <br></br>
 
-        <label for="parameter">How many comments do you want to see:</label> 
-        <input type="number" name="parameter" min="1" id="parameter" onchange="loadComment()" value="10">
-        <button onclick="loadComment()">submit</button>
-        <button onclick="deleteComments()">delete all</button>
 
-</div>
+        <form method="POST" class="hidden" id="commentForm" enctype="multipart/form-data">
+            <div>
+                <textarea name="comment" id="comment-box">Enter your comment here</textarea>
+                </br>
+                <input type="submit" name="submit-comment"/>
+            </div>
+
+                <br></br>
+
+            <div>
+                <input type="file" name="image-upload">
+                </br>
+                <button>submit</button>
+            </div>
+        </form>
+        
+        <div>
+            <button onclick="addComments()" id="comment-button">Add Comments</button>
+
+            </br>
+
+            <a href="/login" class="hidden" id="login-link">login</a>
+            
+            </br>
+
+            <label for="parameter">How many comments do you want to see:</label> 
+            <input type="number" name="parameter" min="1" id="parameter" onchange="loadComment()" value="10">
+            <button onclick="loadComment()">submit</button>
+            <button onclick="deleteComments()">delete all</button>
+
+        </div>
+    </div>
 </body>

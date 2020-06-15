@@ -21,12 +21,14 @@ public class Comment {
   private String title;
   private long timestamp;
   private String email;
+  private String url;
 
-  public Comment(long id, String title, long timestamp, String email) {
+  public Comment(long id, String title, long timestamp, String email, String url) {
     this.id = id;
     this.title = title;
     this.timestamp = timestamp;
     this.email = email;
+    this.url = url;
   }
 
 }
