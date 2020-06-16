@@ -39,7 +39,7 @@ import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
   DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -97,9 +97,7 @@ public class DataServlet extends HttpServlet {
             System.out.println("url error");
         }
 
-        Comment commentTask = new Comment(id, comment, timestamp, email, url);
-
-        comments.add(commentTask);
+        comments.add(new Comment(id, comment, timestamp, email, url););
     }
 
     response.setContentType("application/json;");
@@ -153,7 +151,6 @@ public class DataServlet extends HttpServlet {
 
   private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
 
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
     List<BlobKey> blobKeys = blobs.get(formInputElementName);
 

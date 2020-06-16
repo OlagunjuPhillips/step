@@ -26,10 +26,11 @@ import com.google.appengine.api.blobstore.BlobKey;
 
 @WebServlet("/upload-url")
 public class UploadUrlServlet extends HttpServlet {
+  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    
     String uploadUrl = blobstoreService.createUploadUrl("/data");
 
     response.setContentType("text/html");
