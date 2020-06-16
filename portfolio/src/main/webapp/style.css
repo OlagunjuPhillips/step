@@ -168,3 +168,8 @@ input[type=text]{
 .hidden{
     display:none;
 }
+
+#comment-list{
+    width: 500px;
+    border:thin;
+}

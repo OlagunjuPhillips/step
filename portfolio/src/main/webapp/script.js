@@ -49,24 +49,32 @@ function loadComment() {
     const commentListElement = document.getElementById("comment-list");
     commentListElement.innerHTML = "";
     
-    comments.forEach((comment) => {
-      const linebreak = document.createElement("br");
-      commentListElement.appendChild(linebreak);
+ 
+    comments.forEach((comment) => {  
       commentListElement.appendChild(createCommentElement(comment));
-      
+      commentListElement.appendChild(document.createElement("br"));
     })
   });
 }
 
 
 function createCommentElement(comment) {
+  const linebreak = document.createElement("br");
+
   const commentElement = document.createElement("li");
   commentElement.className = "comment";
 
   const titleElement = document.createElement("span");
   titleElement.innerText = comment.email+": "+comment.title;
 
+  const commentUpload = document.createElement("img");
+  commentUpload.src = comment.url;
+  commentUpload.width = 100;
+
   commentElement.appendChild(titleElement);
+  commentElement.appendChild(linebreak);
+  commentElement.appendChild(commentUpload);
+
   return commentElement;
 }
 
@@ -79,13 +87,32 @@ function addComments(){
 
         const commentBox = document.getElementById("commentForm");
         const loginLink = document.getElementById("login-link");
+        const commentButton = document.getElementById("comment-button");
 
 
         if(response[0] == "1"){
             commentBox.style.display = "block";
+            commentButton.style.display = "none";
         }
         else{
             loginLink.style.display = "block";
         }
     })
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('commentForm');
+        messageForm.action = imageUploadUrl;
+        console.log("url recieved");
+      });
+}
+
+function loadAllFunctions(){
+    fetchBlobstoreUrlAndShowForm();
+    loadComment();
 }
