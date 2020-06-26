@@ -62,6 +62,7 @@ public final class FindMeetingQueryTest {
 
     Collection<TimeRange> actual = query.query(NO_EVENTS, request);
     Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
+    System.out.println(expected);
 
     Assert.assertEquals(expected, actual);
   }
@@ -267,7 +268,6 @@ public final class FindMeetingQueryTest {
 
     Collection<TimeRange> actual = query.query(events, request);
     Collection<TimeRange> expected = Arrays.asList();
-
     Assert.assertEquals(expected, actual);
   }
 }
